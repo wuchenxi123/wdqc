@@ -85,7 +85,7 @@ var config = {
 				          { data : "coName" },
 				          { data : "csOpendatestart" },
 				          { data : "timeFrame" },
-				          { data : ".cpName" },
+				          { data : "cpName" },
 				          { data : "crName" } ,
 				          { data : "csCharge" } ,
 				          { data : "csPeopleremain" } ,
@@ -124,6 +124,10 @@ var config = {
 						$("[id='form.csId']").val(data.csId);
 						$("#showgradss").empty();
 						$.page.config.fnLoadmaterial(data.coId);
+						//alert(data.mtlPrice);
+						if(data.mtlPrice==null){
+							data.mtlPrice=0;
+						}
 						var html='<div class="panel panel-warning" id="pan_' +data.csId + '"><div class="panel-heading"><a class="panel-title">班级详情</a> <a class="pull-right btn " onclick="$.page.config.fnDel(' +data.csId + ')"> ';
 						html=html+'<i class="fa fa-times"></i> 删除</a></div><div class="panel-body">';
 						html=html+'<label class="col-sm-1 control-label">班名：</label> <div class="col-sm-2"><span>'+data.csName+'</span></div>  <label class="col-sm-1 control-label">费用：</label>';
@@ -131,6 +135,24 @@ var config = {
 						html=html+'<label class="col-sm-1 control-label">优惠：</label><div class="col-sm-2"><input id="cltReduce" type="text" class="form-control" value="0"></div></div></div>';
 						$("#charge").text(data.csCharge);
 						$("#showgradss").append(html);
+						
+						
+						$("#printgradlass").empty();
+						var html1='<div class="panel panel-warning" style="text-align:"center"><div class="panel-heading" style="text-align:"center" "><a class="panel-title">舞动全城 ( '+data.cpName+'校区 ) 业务凭证 </a>';
+						html1=html1+'</div><div class="panel-body">';
+						html1=html1+'<label class="col-sm-1 control-label">班名：</label> <div class="col-sm-2"><span>'+data.csName+'</span></div>  <label class="col-sm-1 control-label">课程：</label>';
+						html1=html1+'<div class="col-sm-2 text-danger"><span>'+data.coName+'</span></div><label class="col-sm-1 control-label">开班日期：</label><div class="col-sm-2"><span>'+data.csOpendatestart+'</span></div>';
+						html1=html1+'<label class="col-sm-1 control-label">上课时段：</label> <div class="col-sm-2"><span>'+data.timeFrame+'</span></div></div></div>';
+						html1=html1+'<div style="margin-top: 10px;text-align=center ">教材费用：￥'+data.mtlPrice+' | 学费：￥'+data.csCharge+' | 总计：￥'+(data.mtlPrice+data.csCharge)+'</div>'
+						html1=html1+'<div style="margin-top: 10px;text-align=center ">上课教室：'+data.crName+'</div>'
+						html1=html1+'<div style="margin-top: 10px;text-align=center ">开课三次后不予办理退费。请您保管好您的收据，丢失不予补办</div>'
+						html1=html1+'<div style="margin-top: 20px;text-align=center "><span style="margin-right: 200px">学员签字：</span><span>经办人签字：</span> </div>'
+						html1=html1+'<div style="margin-top: 30px;text-align=center "><a class="btn btn-primary" onClick="javascript:window.print()"><i class="fa fa-save"></i>打印</a></div>'
+				//		$("#charge").text(data.csCharge);
+						$("#printgradlass").append(html1);
+						
+						
+						
 						$("#material").show();
 						
 					}
@@ -141,6 +163,7 @@ var config = {
 			}	
 		
 	},
+	
 	fnLoadmaterial : function(pk) {
 		alert(pk);
 		url = ctx + '/mtl_Show.ac?param._ne_coId='+pk;
@@ -226,6 +249,18 @@ function getHtml(data,id) {
 	c=parseInt(sum)+parseInt(data.csCharge);
 	$("#charge").text(c);
 	$("#showgradss").append(html);
+	
+	$("#printgradlass").empty();
+	var html='<div class="panel panel-warning"><div class="panel-heading" style="text-align:"center" "><a class="panel-title">舞动全城 ( '+data.cpName+'校区 ) 业务凭证 </a>';
+	html=html+'</div><div class="panel-body">';
+	html=html+'<label class="col-sm-1 control-label">班名：</label> <div class="col-sm-2"><span>'+data.csName+'</span></div>  <label class="col-sm-1 control-label">课程：</label>';
+	html=html+'<div class="col-sm-2 text-danger"><span>'+data.coName+'</span></div><label class="col-sm-1 control-label">开班日期：</label><div class="col-sm-2"><span>'+data.csOpendatestart+'</span></div>';
+	html=html+'<label class="col-sm-1 control-label">上课时段：</label> <div class="col-sm-2"><span>'+data.timeFrame+'</span></div></div></div>';
+	var sum=$("#charge").text();
+	c=parseInt(sum)+parseInt(data.csCharge);
+	$("#charge").text(c);
+	$("#printgradlass").append(html);
+	
 }
 
 function cltSaleid(pk) {	

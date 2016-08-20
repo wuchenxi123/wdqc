@@ -14,7 +14,6 @@ import com.core.jop.infrastructure.db.DBAccessUser;
 import com.core.jop.infrastructure.db.hibernate3.Hibernate3SessionManager;
 import com.manage.gradlassTeacher.persistent.GradlassTeacherDAO;
 import com.manage.gradlassTeacher.persistent.GradlassTeacherVO;
-import com.manage.student.control.Student;
 import com.manage.teacher.persistent.TeacherVO;
 
 /**
@@ -114,13 +113,9 @@ public class GradlassDAO extends AbstractDAO {
 		Connection con = ((Session) sm.getCurrentSession()).connection();
 		PreparedStatement ds = null;
 		PreparedStatement dsi = null;
-		PreparedStatement dsii = null;
-		PreparedStatement dsiii = null;
 		try {
 			ds = con.prepareStatement("delete from ms_class_teacher where gradlassId = ?");
 			dsi = con.prepareStatement("delete from ms_gradlass where cs_id = ?");
-			dsii = con.prepareStatement("delete from ms_studentclass where cs_id = ?");
-			dsiii = con.prepareStatement("delete from ms_costlist where cs_id = ?");
 			for (int i = 0; i < list.size(); i++) {
 				Integer sbId = Integer.valueOf(list.get(i).trim());
 				ds.setInt(1, sbId);
@@ -128,12 +123,6 @@ public class GradlassDAO extends AbstractDAO {
 				
 				dsi.setInt(1, sbId);
 				dsi.addBatch();
-				
-				dsii.setInt(1, sbId);
-				dsii.addBatch();
-				
-				dsiii.setInt(1, sbId);
-				dsiii.addBatch();
 			}
 			
 			boolean ac = con.getAutoCommit();
@@ -141,11 +130,7 @@ public class GradlassDAO extends AbstractDAO {
 				con.setAutoCommit(false);
 			}
 			ds.executeBatch();
-			dsii.executeBatch();
-			
-			dsiii.executeBatch();
 			dsi.executeBatch();
-			
 			con.commit();
 			con.setAutoCommit(ac);
 		} catch (Exception e) {
@@ -155,8 +140,9 @@ public class GradlassDAO extends AbstractDAO {
 			if (null != ds) {
 				ds.close();
 			}
+			if (null != dsi) {
+				dsi.close();
+			}
 		}
     }
-
-	
 }

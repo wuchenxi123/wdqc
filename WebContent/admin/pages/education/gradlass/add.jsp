@@ -28,6 +28,7 @@
 	<!-- Main content -->
 
 	<section class="content">
+	<div id="info" class="tab-pane fade in active">
 	<form role="form" class="form-horizontal">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -45,7 +46,7 @@
 										<div class="form-group">
 											<label class="col-sm-4 control-label">校区：</label>
 											<div class="col-sm-8">
-												<select name="form.cpId" id="form.campus.cpId"
+												<select name="form.cpId" id="form.cpId"
 													class="form-control">	
 												</select>
 											</div>
@@ -69,7 +70,7 @@
 										<div class="form-group">
 											<label class="col-sm-4 control-label">课程：</label>
 											<div class="col-sm-8">
-												<select name="form.coId" id="form.course.coId"
+												<select name="form.coId" id="form.coId"
 													class="form-control">
 												</select>
 											</div>
@@ -79,7 +80,7 @@
 										<div class="form-group">
 											<div class="col-sm-8">
 												<select name="form.coClassify"
-													id="form.course.coClassify" class="form-control">
+													id="form.coClassify" class="form-control">
 												</select>
 											</div>
 										</div>
@@ -416,11 +417,12 @@
 
 		<div class="col-xs-12">
 			<div class="col-xs-4 col-xs-offset-4" style="height: 155px;">
-				<button type="button" onclick="$finish();"
+				<button type="button" id="gradlassSave" onclick="$finish();"
 					class="btn btn-primary  btn-lg btn-block">保存</button>
 			</div>
 		</div>
 	</form>
+	</div>
 	</section>
 
 </body>

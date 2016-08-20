@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.core.jop.infrastructure.control.AbstractControlBean;
+import com.core.jop.infrastructure.control.BOFactory;
 import com.core.jop.infrastructure.db.DAOFactory;
 import com.core.jop.infrastructure.db.DataPackage;
 import com.manage.campus.persistent.CampusDAO;
 import com.manage.campus.persistent.CampusVO;
 import com.manage.classroom.persistent.ClassroomDAO;
 import com.manage.classroom.persistent.ClassroomVO;
+import com.manage.costlist.control.Costlist;
+import com.manage.costlist.control.CostlistBO;
+import com.manage.costlist.persistent.CostlistVO;
+import com.manage.costlist.web.CostlistWebParam;
 import com.manage.course.persistent.CourseDAO;
 import com.manage.course.persistent.CourseVO;
 import com.manage.gradlass.persistent.GradlassDAO;
@@ -20,7 +25,10 @@ import com.manage.gradlass.web.GradlassWebParam;
 import com.manage.gradlassTeacher.persistent.GradlassTeacherDAO;
 import com.manage.gradlassTeacher.persistent.GradlassTeacherVO;
 import com.manage.gradlassTeacher.web.GradlassTeacherWebParam;
-import com.manage.student.control.Student;
+import com.manage.studentclass.control.Studentclass;
+import com.manage.studentclass.control.StudentclassBO;
+import com.manage.studentclass.persistent.StudentclassVO;
+import com.manage.studentclass.web.StudentclassWebParam;
 import com.manage.teacher.persistent.TeacherDAO;
 import com.manage.teacher.persistent.TeacherVO;
 import com.manage.teacher.web.TeacherWebParam;
@@ -142,7 +150,7 @@ public class GradlassBO extends AbstractControlBean implements Gradlass {
 				if(o.getGradlassTeacher()!=null){
 					this.fillTeacher(o);
 				}
-				if(("1").equals(o.getCsOpendatestatus())){
+				if(("0").equals(o.getCsOpendatestatus())){
 				if(o.getCsWeekend()!=null){
 					o.setTimeFrame(o.getCsWeekend() + "-"
 							+ o.getCsDateStartHour() + ":"
@@ -212,7 +220,7 @@ public class GradlassBO extends AbstractControlBean implements Gradlass {
 
 		return vo;
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -221,18 +229,43 @@ public class GradlassBO extends AbstractControlBean implements Gradlass {
 				GradlassDAO.class, user);
 		dao.doDel(ids);
 	}
-	
 	public DataPackage doQuerySumIncome(GradlassWebParam params)throws Exception {
 		GradlassDAO dao = (GradlassDAO) DAOFactory.build(GradlassDAO.class,
 				user);
 		DataPackage dp = dao.query(params);
+		
+		StudentclassWebParam stparams = new StudentclassWebParam();
+		Studentclass scbo = (Studentclass) BOFactory.build(StudentclassBO.class, user);
+		
+		CostlistWebParam clparams = new CostlistWebParam();
+		Costlist clbo = (Costlist) BOFactory.build(CostlistBO.class, user);
+		
+		double sum;
 		if (dp.getRowCount() > 0) {
 			for (Object vo : dp.getDatas()) {
+				sum=0;
 				GradlassVO o = (GradlassVO) vo;
-				
+				stparams.set_ne_csId(o.getCsId().toString());
+				DataPackage stdp = scbo.doQuery(stparams);
+				List<StudentclassVO> scAll=stdp.getDatas();
+				if(scAll!=null&&scAll.size()>0){
+					for (StudentclassVO studentclassVO : scAll) {
+						clparams.set_ne_csId(o.getCsId().toString());
+						clparams.set_ne_stId(studentclassVO.getStId().toString());
+						DataPackage cldp = clbo.doQuery(clparams);
+						if(cldp.getDatas().size()<1){
+							sum=sum;
+						}else{
+							CostlistVO clvo=(CostlistVO)cldp.getDatas().get(0);
+							sum=sum+clvo.getCltSum();
+						}
+						
+					}
+					o.setSumIncome(sum);
+				}
+				o.setSumIncome(sum);
 			}
 		}
 		return dao.query(params);
 	}
-
 }

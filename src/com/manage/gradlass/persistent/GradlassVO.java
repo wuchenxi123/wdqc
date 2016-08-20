@@ -109,7 +109,7 @@ public class GradlassVO extends BaseVO implements Serializable {
     private String crName;
     
     private String coName;
-    private Integer sumIncome;
+    private Double sumIncome;
 /*    private CourseVO course;
     private ClassroomVO classroom;
     private CampusVO campus;*/
@@ -488,13 +488,15 @@ public class GradlassVO extends BaseVO implements Serializable {
 		this.csStatus = csStatus;
 	}
 
-	public Integer getSumIncome() {
+	public Double getSumIncome() {
 		return sumIncome;
 	}
 
-	public void setSumIncome(Integer sumIncome) {
+	public void setSumIncome(Double sumIncome) {
 		this.sumIncome = sumIncome;
 	}
+
+	
 
 
 }
