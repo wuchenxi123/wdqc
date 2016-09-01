@@ -71,6 +71,7 @@ public class CourseBO extends AbstractControlBean implements
 
 	public CourseVO doFindByPk(Serializable pk) throws Exception {
 		CourseDAO dao = (CourseDAO) DAOFactory.build(CourseDAO.class,user);
+		
 		return (CourseVO) dao.findByPk(pk);
 	}
 
@@ -116,7 +117,12 @@ public class CourseBO extends AbstractControlBean implements
 			vo.setCreatername(c);
 		}else{
 			MemberVO c = (MemberVO) dao.findByPk(Integer.valueOf(vo.getCreator()));
-			vo.setCreatername(c.getMbPetName());
+			if(c==null){
+				vo.setCreatername(null);
+			}else{
+				vo.setCreatername(c.getMbPetName());
+				}
+			
 		}
 		return vo;
 	}

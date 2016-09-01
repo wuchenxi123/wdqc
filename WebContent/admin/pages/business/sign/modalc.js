@@ -147,8 +147,8 @@ var config = {
 						html1=html1+'<div style="margin-top: 10px;text-align=center ">上课教室：'+data.crName+'</div>'
 						html1=html1+'<div style="margin-top: 10px;text-align=center ">开课三次后不予办理退费。请您保管好您的收据，丢失不予补办</div>'
 						html1=html1+'<div style="margin-top: 20px;text-align=center "><span style="margin-right: 200px">学员签字：</span><span>经办人签字：</span> </div>'
-						html1=html1+'<div style="margin-top: 30px;text-align=center "><a class="btn btn-primary" onClick="javascript:window.print()"><i class="fa fa-save"></i>打印</a></div>'
-				//		$("#charge").text(data.csCharge);
+						html1=html1+'<div style="margin-top: 30px;text-align=center "></div>'
+				//		$("#charge").text(data.csCharge);/*<a class="btn btn-primary" onClick="$.page.config.preview()"><i class="fa fa-save"></i>打印</a>*/
 						$("#printgradlass").append(html1);
 						
 						

@@ -278,7 +278,7 @@
 							</div>
 						</div>
 					</div>
-					
+					<!--startprint-->
 					<div class="panel panel-primary ">
 							<div class="panel-heading">
 								<h3 class="panel-title">打印凭证</h3>
@@ -291,23 +291,7 @@
 											
 												<div class="col-sm-12" style="margin-top: 30px;">
 													<div id="printgradlass" style="text-align: center;" align="center"></div>
-														<!-- 
-														<table border="1" bordercolor="a0c6e5" align=center
-															cellspacing=1 cellpadding=3
-															style="border-collapse: collapse; text-align: center;">
-															<tbody style="text-align: center;">
-																<tr>
-																	<td>班级</td>
-																	<td>课程</td>
-																	<td width="200px">上课时长</td>
-																	<td width="200px">上课时段</td>
-																</tr>
-																<tr>
-																	
-																</tr>
-															</tbody>
-														</table>
-														 -->
+														
 												</div>
 											</div>
 										</div>
@@ -317,11 +301,11 @@
 
 							</div>
 						</div>
-					
+					<!--endprint-->
 					
 					<div class="box-footer ">
 						<a class="btn btn-primary" onclick="$.page.config.fnFinish();">
-							<i class="fa fa-save"></i>提交
+							<i class="fa fa-save"></i>提交并打印
 						</a>
 						<!--  <a href="#info" data-toggle="tab"
 							class="btn btn-primary pull-right"> <i

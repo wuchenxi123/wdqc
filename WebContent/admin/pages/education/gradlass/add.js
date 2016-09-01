@@ -106,8 +106,8 @@ $.page.set({
 					        $('#reservation span').html(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
 					        startDate = start;
 					        endDate = end; 
-					        $("[id='form.csOpendatestart']").val(start.format('YYYY-MM-DD'));
-					        $("[id='form.csOpendateend']").val(end.format('YYYY-MM-DD'));
+					        $("[id='form.csOpendatestart']").val(startDate.format('YYYY-MM-DD'));
+					        $("[id='form.csOpendateend']").val(endDate.format('YYYY-MM-DD'));
 					       }
 					    );
 			},
@@ -157,7 +157,7 @@ $.page.set({
 		
 			addTeacher :function() {
 				var html1 = '<select name="form.teaList['+k+'].teId "'
-					+ 'id="form.teacher.teId'+k+' "'+'class="form-control">'
+					+ 'id="form.teacher.teId'+k+' "'+'class="form-control" style="margin-top: 16px"><option value=""></option>'
 					+htmltea+ '</select>';
 				$("[id='form.teaSelect']").append(html1);
 //				$.page.config.fnLoadTeacher();
@@ -220,9 +220,28 @@ $.page.set({
 					e.preventDefault();
 					// 解绑事件
 					$.page.config.fnPreventTab(false);
-					$.page.config.infosave();
-//					$("#material").hide();
+					$.page.config.fnFinish();
 				});
+			},
+			fnSave : function() {
+
+				$("#info form").submit();
+			},
+			fnFinish : function(url, rtnUrl) {
+				if (!url)
+					url = $.page.config.Save;
+				if (!rtnUrl)
+					rtnUrl = $.page.config.Return;
+				var formData = $("form").serializeArray();
+				$.post(url, formData, function(data, textStatus, jqXHR) {
+					if (data.success) {
+						alert('保存成功!');
+						$.page.load(rtnUrl);
+					} else {
+						alert('保存失败！请再次查看已填信息' + data.msg);
+					}
+				});
+
 			},
 });
 
@@ -245,23 +264,41 @@ $("[id='form.csArriveInform']").on('click',function(e){
 		$("[id='form.csArriveInform']").val('0');
 	}
 });
-
+$('input[type=checkbox]').change(function(){
+	var chk_value =[];
+	$('input[name="csWeekend"]:checked').each(function(){
+	chk_value.push($(this).val());
+	});
+	$("[id='form.csWeekend']").val(chk_value);
+})
 $("[id='form.classtime']").on('click',function(e){
 	if($("[id='form.classtime']").is(':checked')) {
+		
+		$("[id='csWeekend']").each(function(){
+			if($(this).prop("checked")){
+			$(this).prop("checked",false);
+			}
+			}); 
+		
 		$("[id='form.csWeekend']").val('');
 		$("[id='form.csDatestarthour']").val('');
 		$("[id='form.csDatestartminute']").val('');
 		$("[id='form.csDateendhour']").val('');
 		$("[id='form.csDateendminute']").val('');
 		
-		$("[id='form.csWeekend']").attr("disabled",true);
+		$("[id='csWeekend']").each(function(){
+			$(this).attr("disabled",true);
+			}); 
 		$("[id='form.csDatestarthour']").attr("disabled",true);
 		$("[id='form.csDatestartminute']").attr("disabled",true);
 		$("[id='form.csDateendhour']").attr("disabled",true);
 		$("[id='form.csDateendminute']").attr("disabled",true);
 	}
 	else{
-		$("[id='form.csWeekend']").attr("disabled",false);
+		$("[id='csWeekend']").each(function(){
+			$(this).attr("disabled",false);
+			}); 
+		
 		$("[id='form.csDatestarthour']").attr("disabled",false);
 		$("[id='form.csDatestartminute']").attr("disabled",false);
 		$("[id='form.csDateendhour']").attr("disabled",false);
@@ -269,22 +306,7 @@ $("[id='form.classtime']").on('click',function(e){
 	}
 });
 
-$finish=function(url, rtnUrl) {
-	if (!url)
-		url = $.page.config.Save;
-	if (!rtnUrl)
-		rtnUrl = $.page.config.Return;
-	var formData = $("form").serializeArray();
-	$.post(url, formData, function(data, textStatus, jqXHR) {
-		if (data.success) {
-			alert('保存成功!');
-			$.page.load(rtnUrl);
-		} else {
-			alert('保存失败！' + data.msg);
-		}
-	});
 
-},
 $(document).ready(function() {
 	$.page.config.fnLoadCampus();
 	$.page.config.fnLoadCourse();

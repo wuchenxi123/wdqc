@@ -15,13 +15,16 @@ import org.apache.struts2.ServletActionContext;
 
 import com.core.jop.common.utils.bean.BeanUtils;
 import com.core.jop.infrastructure.control.BOFactory;
+import com.core.jop.infrastructure.db.DAOFactory;
 import com.core.jop.infrastructure.db.DataPackage;
 import com.core.jop.ui.struts2.BaseAction;
 import com.core.sys.util.PageUtils;
 import com.core.sys.util.object.DataTablePage;
 import com.manage.gradlass.control.Gradlass;
 import com.manage.gradlass.control.GradlassBO;
+import com.manage.gradlass.persistent.GradlassDAO;
 import com.manage.gradlass.persistent.GradlassVO;
+import com.manage.student.persistent.StudentVO;
 import com.util.Constants;
 
 /**
@@ -69,7 +72,24 @@ public class GradlassAction extends BaseAction{
 		PageUtils.writePage(new DataTablePage(dp), response, "yyyy-MM-dd HH:mm:ss");
 		return null;
 	}
-	
+	public String doListStudent() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		this.setParam4DataTable();
+		Map<String, Object> map = new HashMap<String, Object>();
+		GradlassWebParam params = (GradlassWebParam) this.getParam();
+		Gradlass bo = (Gradlass) BOFactory.build(GradlassBO.class, this.getDBAccessUser());
+		DataPackage dp = bo.doQuery(params);
+		List<GradlassVO> al=dp.getDatas();
+		map.put("datas",al);
+		List<StudentVO> algrad=al.get(0).getStudentList();
+		if(algrad!=null&&algrad.size()>0){
+			dp.setDatas(algrad);
+		}else{
+			dp.setDatas(null);
+		}
+		PageUtils.writePage(new DataTablePage(dp), response, "yyyy-MM-dd");
+		return null;
+	}
 	
 
 	public String doSave() throws Exception {
@@ -118,6 +138,7 @@ public class GradlassAction extends BaseAction{
 					+"--"+al.get(0).getCsDateEndHour()+":"+al.get(0).getCsDateEndMinute());
 			form.setCpName(al.get(0).getCpName());
 			form.setCrName(al.get(0).getCrName());
+			form.setCsPeopleremain((short)al.get(0).getStudentList().size());
 		}
 		PageUtils.writePage(form, response, "yyyy-MM-dd");
 		return null;
@@ -169,6 +190,27 @@ public class GradlassAction extends BaseAction{
 		dp.put("datas", vo);
 		return null;
 	}
+	
+	/**
+	 * 下线
+	 */
+	public String doGetOffLine() throws Exception {
+		Map<String, Object> dp = new HashMap<String, Object>();
+		GradlassWebParam params = (GradlassWebParam) this.getParam();
+		Gradlass bo = (Gradlass) BOFactory.build(GradlassBO.class, this.getDBAccessUser());
+		GradlassVO vo = bo.doFindByPk(Long.valueOf(params.get_pk()));
+		int flag=Integer.parseInt(params.get_flag());
+		if(flag==0){
+			vo.setCsStatus(-1);
+		}else{
+			vo.setCsStatus(0);
+		}
+		vo=((GradlassBO) bo).doUpdateNew(vo);
+		dp.put(Constants.AC, Constants.AC_success);
+		dp.put(Constants.AC_msg, "");
+		dp.put("datas", vo);
+		return null;
+	}
 	/**
 	 * 删除
 	 */
@@ -191,6 +233,7 @@ public class GradlassAction extends BaseAction{
 		PageUtils.writePage(dp, response);
 		return null;
 	}
+	
 	public String doStatisticsIncome() throws Exception {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -201,5 +244,15 @@ public class GradlassAction extends BaseAction{
 		map.put("datas",al);
 		PageUtils.writePage(dp, response);
 		return null;
+	}
+	public String doGetExport() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		GradlassWebParam params = (GradlassWebParam) this.getParam();
+		Gradlass bo = (Gradlass) BOFactory.build(GradlassBO.class,
+				this.getDBAccessUser());
+		DataPackage dp = bo.doQuery(params);
+		GradlassDAO dao = (GradlassDAO) DAOFactory.build(GradlassDAO.class, this.getDBAccessUser());
+		dao.extport(dp);
+		return null;		
 	}
 }

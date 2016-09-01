@@ -82,7 +82,7 @@ $.page.set({
 					  			  { orderable : false ,searchable : false ,defaultContent : ''},			  
 					  	          { data : "csName" },
 					  	          { data : "csPeoplecount" },
-					  	          { data : "" },
+					  	          { data : "teacherName" },
 					  	          { data : "coName" },
 					  	          { data : "csOpendatestart" },
 					  	          { data : "cpName" },
@@ -92,8 +92,10 @@ $.page.set({
 					  	      ], 
 					  	    fnRowCallback : function(nRow,aData,iDataIndex){			    	  
 					  	    	var viewPage = ctx + '/admin/pages/education/gradlass/view.jsp';
+								var studentlisthtml = ctx + '/admin/pages/education/gradlass/studentlist.jsp';
 								var html = '<div class="btn-group btn-group-xs" role="group" aria-label="...">';
 								html = html + '<a class="btn" href="javascript:loadPage(\'' + viewPage + '\',\'' + aData.csId + '\');"> <i class="fa fa-edit"></i> 查看</a>';
+								html = html + '<a class="btn" href="javascript:loadPage(\'' + studentlisthtml + '\',\'' + aData.csId + '\');"> <i class="fa fa-edit"></i> 查看本班学生</a>';
 								html = html + '</div>';
 								$('td:eq(-1)', nRow).html(html);
 								var teacher;
