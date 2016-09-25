@@ -67,13 +67,17 @@
 									<th>性别</th>
 									<th>年龄</th>
 									<th>电话</th>
-									<th>email</th>
+									<th>微信号</th>
 									<th>校区</th>
 									<th>状态</th>
 									<th>居住地</th>
 									<th>经办人</th>									
 									<th>销售人</th>
 									<th>报名时间</th>
+									<th>停课理由</th>
+									<th>停课时间</th>
+									<th>预计恢复时间</th>
+									<th>余额</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -85,13 +89,17 @@
 									<th>性别</th>
 									<th>年龄</th>
 									<th>电话</th>
-									<th>email</th>
+									<th>微信号</th>
 									<th>校区</th>
 									<th>状态</th>
 									<th>居住地</th>
 									<th>经办人</th>									
 									<th>销售人</th>
 									<th>报名时间</th>
+									<th>停课理由</th>
+									<th>停课时间</th>
+									<th>预计恢复时间</th>
+									<th>余额</th>
 									<th></th>
 								</tr>
 							</tfoot>

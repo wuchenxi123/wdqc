@@ -105,7 +105,7 @@ public class CostlistAction extends BaseAction{
 			BeanUtils.copyProperties(vo, form);
 			Costlist bo = (Costlist) BOFactory.build(CostlistBO.class, this.getDBAccessUser());
 			if (null == vo.getCltId()) {
-				/*vo.setCreator(this.getDBAccessUser().getOperid());*/
+				vo.setCreator(this.getDBAccessUser().getOperid());
 				vo.setCreateTime(new Date());
 				vo = bo.doCreate(vo);
 			} else {

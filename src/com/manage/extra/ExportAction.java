@@ -102,9 +102,9 @@ public class ExportAction extends BaseAction {
 				cell = row.createCell(4);
 				cell.setCellValue(student1.getStMotherMobile());
 			}
-			if (student1.getStEmail() != null) {
+			if (student1.getStWechat() != null) {
 				cell = row.createCell(5);
-				cell.setCellValue(student1.getStEmail());
+				cell.setCellValue(student1.getStWechat());
 			}
 			if (student1.getStReside() != null) {
 				cell = row.createCell(6);

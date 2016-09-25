@@ -19,7 +19,7 @@ public class StudentVO extends BaseVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** identifier field */
+    /** identifier field */
     private Long stId;
 
     /** nullable persistent field */
@@ -48,10 +48,19 @@ public class StudentVO extends BaseVO implements Serializable {
 
     /** nullable persistent field */
     private String stMobile;
-    
+
     /** nullable persistent field */
-    private String stEmail;
-    
+    private Integer stPlace;
+
+    /** nullable persistent field */
+    private String stReason;
+
+    /** nullable persistent field */
+    private Double stAmount;
+
+    /** nullable persistent field */
+    private String stWechat;
+
     /** nullable persistent field */
     private String stLocationSchool;
 
@@ -110,21 +119,28 @@ public class StudentVO extends BaseVO implements Serializable {
     private Integer stSlotcardid;
 
     /** nullable persistent field */
+    private Integer creator;
+
+    /** nullable persistent field */
     private java.util.Date createTime;
 
     /** nullable persistent field */
-    private Integer creator;
+    private Integer updator;
 
     /** nullable persistent field */
     private java.util.Date updateTime;
 
     /** nullable persistent field */
-    private Integer updator;
-    
+    private java.util.Date expectTime;
+
+    /** nullable persistent field */
+    private java.util.Date spendclassTime;
+
+    /** nullable persistent field */
+    private java.util.Date regainclassTime;
+   
     private String creatorname;
-    
-    private String gradlass;
-    
+      
     private String campus;
     
     
@@ -456,13 +472,6 @@ public class StudentVO extends BaseVO implements Serializable {
 	}
 
 
-	public String getStEmail() {
-		return stEmail;
-	}
-
-	public void setStEmail(String stEmail) {
-		this.stEmail = stEmail;
-	}
 
 /*	public DataPackage getGrad() {
 		return grad;
@@ -488,8 +497,61 @@ public class StudentVO extends BaseVO implements Serializable {
 		this.campus = campus;
 	}
 
-	public void setGradlass(String gradlass) {
-		this.gradlass = gradlass;
+
+	public Integer getStPlace() {
+		return stPlace;
+	}
+
+	public void setStPlace(Integer stPlace) {
+		this.stPlace = stPlace;
+	}
+
+	public String getStReason() {
+		return stReason;
+	}
+
+	public void setStReason(String stReason) {
+		this.stReason = stReason;
+	}
+
+	public Double getStAmount() {
+		return stAmount;
+	}
+
+	public void setStAmount(Double stAmount) {
+		this.stAmount = stAmount;
+	}
+
+	public String getStWechat() {
+		return stWechat;
+	}
+
+	public void setStWechat(String stWechat) {
+		this.stWechat = stWechat;
+	}
+
+	public java.util.Date getExpectTime() {
+		return expectTime;
+	}
+
+	public void setExpectTime(java.util.Date expectTime) {
+		this.expectTime = expectTime;
+	}
+
+	public java.util.Date getSpendclassTime() {
+		return spendclassTime;
+	}
+
+	public void setSpendclassTime(java.util.Date spendclassTime) {
+		this.spendclassTime = spendclassTime;
+	}
+
+	public java.util.Date getRegainclassTime() {
+		return regainclassTime;
+	}
+
+	public void setRegainclassTime(java.util.Date regainclassTime) {
+		this.regainclassTime = regainclassTime;
 	}
 
 }

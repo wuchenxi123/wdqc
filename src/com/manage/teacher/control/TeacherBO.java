@@ -46,8 +46,8 @@ public class TeacherBO extends AbstractControlBean implements
 					tcdao.create(tco);
 				}
 			}
-			vo.setGradlassteacher(tv.getTeId());
-			tv=this.doUpdate(vo);
+//			vo.setGradlassteacher(tv.getTeId());
+//			tv=this.doUpdate(vo);
 			return tv;
 		} catch (Exception ex) {
 			sessionContext.setRollbackOnly();

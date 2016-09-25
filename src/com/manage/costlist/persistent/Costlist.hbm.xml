@@ -6,6 +6,7 @@
 <generator class="native"/>
 </id>
 <property column="st_id" length="10" name="stId" type="java.lang.Integer"/>
+<property column="cp_id" length="10" name="cpId" type="java.lang.Integer"/>
 <property column="cs_id" length="10" name="csId" type="java.lang.Integer"/>
 <property column="clt_type" length="10" name="cltType" type="java.lang.Integer"/>
 <property column="clt_remark" length="255" name="cltRemark" type="java.lang.String"/>

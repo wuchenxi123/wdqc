@@ -1,14 +1,7 @@
 
 function exportStudent(url) {
 	url =ctx+'/st_GetExport.ac';
-		$.post(url, {
-		}, function(data, textStatus, jqXHR) {
-			if ("success" == textStatus) {
-				
-				alert("数据导出成功，导出地址为"+data.filepath);		
-				}							
-		
-	}); 
+	window.open(url);
 };
 var grid = null;
 $(document).ready(function() {
@@ -20,7 +13,7 @@ $(document).ready(function() {
 	      pagingType: "simple_numbers",
 	      aLengthMenu:[10,5,20,50,100,500],
 	      ajax: {
-	          "url": ctx+'/st_List.ac',
+	          "url": ctx+'/st_ListByCampus.ac',
 	          "type": "POST",
 	          data : function(d){
 	            	  // add query param to data
@@ -51,7 +44,7 @@ $(document).ready(function() {
 	          { data : "stSex" },
 	          { data : "stAge" },
 	          { data : "stMobile" },
-	          { data : "stEmail" },
+	          { data : "stWechat" },
 	          { data : "campus" ,orderable : false ,},
 	          { data : "stStatus" } ,
 	          { data : "stReside" } ,
@@ -65,9 +58,14 @@ $(document).ready(function() {
 			   	var editPage = ctx + '/admin/pages/business/sign/edit.jsp';
 			   	var Delete = ctx + '/st_Del.ac';
 				var html = '<div class="btn-group btn-group-xs" role="group" aria-label="...">';
-				html = html + '<a class="btn btn-link" href="javascript:loadPage(\'' + viewPage + '\',\'' + aData.stId + '\');"> <i class="fa fa-eye"></i> 查看</a>';
-				html = html + '<a class="btn btn-link" href="javascript:loadPage(\'' + editPage + '\',\'' + aData.stId + '\');"><i class="fa fa-edit"></i>修改信息</a>';
-				html = html + '<a class="btn btn-link" onclick="$.page.del(\'' +Delete+ '?ids=' + aData.stId + '\');"> <i class="fa fa-times"></i> 删除</a>';
+				html = html + '<a class="btn btn-link" href="javascript:loadPage(\'' + viewPage + '\',\'' + aData.stId + '\');"> <i class="fa fa-eye"></i> 查看</a>';				
+				var roletype=$("#roletype").val();
+				if(roletype==1){
+					html = html + '<a class="btn btn-link" href="javascript:loadPage(\'' + editPage + '\',\'' + aData.stId + '\');"><i class="fa fa-edit"></i>修改信息</a>';
+					html = html + '<a class="btn btn-link delset" onclick="$.page.del(\'' +Delete+ '?ids=' + aData.stId + '\');"> <i class="fa fa-times"></i> 删除</a>';				
+				}else{
+					html
+				}
 				html = html + '</div>';
 				$('td:eq(-1)', nRow).html(html);
 				$('td:eq(2)', nRow).html(aData.stSex=='0'?'男':'女');
@@ -112,8 +110,9 @@ $(document).ready(function() {
 	    } );
 	    
 	    $.page.set({
-	    	Grid : grid
-	    });
+	    	Grid : grid,
+	    	
+	    });	   
 	  });
 	function addQueryParam(data){
 		$('.Datatable_Param_Form').html($('#Datatable_Param_Form').html());

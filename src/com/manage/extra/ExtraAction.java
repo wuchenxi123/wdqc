@@ -1,5 +1,9 @@
 package com.manage.extra;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +23,15 @@ import com.core.sys.util.PageUtils;
 import com.manage.costlist.control.Costlist;
 import com.manage.costlist.control.CostlistBO;
 import com.manage.costlist.persistent.CostlistDBParam;
+import com.manage.costlist.persistent.CostlistVO;
 import com.manage.costlist.web.CostlistForm;
 import com.manage.member.control.Member;
 import com.manage.member.control.MemberBO;
 import com.manage.member.persistent.MemberVO;
 import com.manage.student.control.Student;
 import com.manage.student.control.StudentBO;
+import com.manage.student.persistent.StudentDBParam;
+import com.manage.student.persistent.StudentVO;
 import com.manage.student.web.StudentWebParam;
 import com.opensymphony.xwork2.ActionContext;
 import com.util.Constants;
@@ -315,25 +322,30 @@ public class ExtraAction extends BaseAction {
 		}
 		return pageno;
 	}
+	//获取报名信息，按校区
 	public String getSignInfo() throws Exception {
 		HttpServletResponse response = ServletActionContext.getResponse();
+		Member mbo = (Member) BOFactory.build(MemberBO.class, this.getDBAccessUser());
+		MemberVO form = mbo.doFindByPk(this.getDBAccessUser().getOperid());		
 		StudentWebParam params = new StudentWebParam();
+		params.set_ne_stLocationSchool(String.valueOf(form.getCpId()));
 		params.setQueryAll(true);
 		Student bo = (Student) BOFactory.build(StudentBO.class,
 				this.getDBAccessUser());
 		DataPackage dp = bo.doQuery(params);
 		String signcount=String.valueOf(dp.getRowCount());
-		String costsum = getSignCostSum();
+		String costsum = getSignCostSum(String.valueOf(form.getCpId()));
 		Map<String, Object> dt = new HashMap<String, Object>();
 		dt.put("count", signcount);
 		dt.put("costsum", costsum);
 		PageUtils.writePage(dt, response);
-		return null;
-		
+		return null;		
 	}
 	
-	public String getSignCostSum() throws Exception {
+	//获取校区收入总和
+	public String getSignCostSum(String cpId) throws Exception {
 		CostlistDBParam params = new CostlistDBParam();
+		params.set_ne_cpId(String.valueOf(cpId));
 		params.setQueryAll(true);
 		Costlist bo = (Costlist) BOFactory.build(CostlistBO.class,
 				this.getDBAccessUser());
@@ -343,4 +355,136 @@ public class ExtraAction extends BaseAction {
 		
 	}
 	
+	//校区统计分析,报名人数分析
+	public String getCampusStuentCount() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();	
+		StudentWebParam params = new StudentWebParam();
+		params.setQueryAll(true);
+		Student bo = (Student) BOFactory.build(StudentBO.class,
+				this.getDBAccessUser());
+		DataPackage dp = bo.doQuery(params);
+		Map<String, Integer> dt = new HashMap<String, Integer>();
+		if (dp.getRowCount() > 0) {
+			for (Object vo : dp.getDatas()) {
+				StudentVO o = (StudentVO) vo;
+				String campus=o.getCampus();
+					if(dt.containsKey(campus)){
+						dt.put(campus,dt.get(campus)+1);
+					}else{
+						dt.put(campus, 0);
+					}
+			}
+		}
+		PageUtils.writePage(dt, response);
+		return null;		
+	}
+	//校区统计分析,报名收入分析
+		public String getCampusIncome() throws Exception {
+			HttpServletResponse response = ServletActionContext.getResponse();	
+			CostlistDBParam params = new CostlistDBParam();
+			params.setQueryAll(true);
+			Costlist bo = (Costlist) BOFactory.build(CostlistBO.class,
+					this.getDBAccessUser());
+			DataPackage dp = bo.doQuery(params);
+			Map<String, Integer> dt = new HashMap<String, Integer>();
+			if (dp.getRowCount() > 0) {
+				for (Object vo : dp.getDatas()) {
+					CostlistVO o = (CostlistVO) vo;
+					String campus=o.getCampus();
+					int sum=o.getCltSum();
+						if(dt.containsKey(campus)){							
+							dt.put(campus,dt.get(campus).intValue()+sum);
+						}else{
+							dt.put(campus, 0);
+						}
+				}
+			}
+			PageUtils.writePage(dt, response);
+			return null;		
+		}
+		
+		//学生来源分析
+			public String getPlace() throws Exception {
+					HttpServletResponse response = ServletActionContext.getResponse();	
+					StudentDBParam params = new StudentDBParam();
+					params.setQueryAll(true);
+					Student bo = (Student) BOFactory.build(StudentBO.class,
+							this.getDBAccessUser());
+					DataPackage dp = bo.doQuery(params);
+					Map<String, Integer> dt = new HashMap<String, Integer>();
+					if (dp.getRowCount() > 0) {
+						for (Object vo : dp.getDatas()) {
+							StudentVO o = (StudentVO) vo;							
+						String place="";
+						if(o.getStPlace()==1){
+							place="无";
+						}else if(o.getStPlace()==2){
+							place="老生介绍新生";
+						}else if(o.getStPlace()==3){
+							place="传单宣发";
+						}
+						else if(o.getStPlace()==4){
+							place="新生介绍新生";
+						}
+						else if(o.getStPlace()==5){
+							place="两人同报";
+						}
+								if(dt.containsKey(place)){							
+									dt.put(place,dt.get(place).intValue()+1);
+								}else{
+									dt.put(place, 0);
+								}
+						}
+						
+					}
+					PageUtils.writePage(dt, response);
+					return null;		
+				}
+//			/**
+//			 * 表格导出
+//			 * 
+//			 * @throws Exception
+//			 */
+//			public void doDownLoad(String path,HttpServletResponse response) throws Exception {
+//				String fileName = path;// 文件名
+//				String fileNameDisplay = fileName.substring(fileName.lastIndexOf("/") + 1);
+//				String filePath = fileName.substring(0, fileName.lastIndexOf("/"));
+//				OutputStream output = null;
+//				FileInputStream fis = null;
+//				try {
+//					File file = new File(fileName);
+//					if (file.exists()) {
+//						response.reset();// 可以加也可以不加
+//						response.setContentType("application/x-download");// 设置为下载application/x-download
+//						response.addHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(fileNameDisplay, "UTF-8"));
+//						output = response.getOutputStream();
+//						fis = new FileInputStream(fileName);
+//						byte[] b = new byte[1024];
+//						int i = 0;
+//						while ((i = fis.read(b)) > 0) {
+//							output.write(b, 0, i);
+//						}
+//						output.flush();
+//
+//					} else {
+//						String alert = "您所下载的资料【" + fileNameDisplay + "】不存在，\\n请联系实施人员将资料部署到" + filePath + "目录下...";
+//						response.setCharacterEncoding("utf-8");
+//						response.setContentType("text/html; charset=utf-8");
+//						PrintWriter outjs = response.getWriter();
+//						outjs.println(" <script language='javascript'>");
+//						outjs.println("   alert(\"" + alert + "\");");
+//						outjs.println("   history.back();");
+//						outjs.println("   window.close();");
+//						outjs.println(" </script>");
+//						return;
+//					}
+//				} catch (Exception e) {
+//					// e.printStackTrace();
+//				} finally {
+//					if (fis != null) {
+//						fis.close();
+//						fis = null;
+//					}
+//				}
+//			}
 }

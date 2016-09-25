@@ -5,6 +5,7 @@
 <id column="mb_id" name="mbId" type="java.lang.Integer">
 <generator class="native"/>
 </id>
+<property column="cp_id" length="10" name="cpId" type="java.lang.Integer"/>
 <property column="role_id" length="10" name="roleId" type="java.lang.Integer"/>
 <property column="mb_name" length="50" name="mbName" type="java.lang.String"/>
 <property column="mb_pet_name" length="20" name="mbPetName" type="java.lang.String"/>

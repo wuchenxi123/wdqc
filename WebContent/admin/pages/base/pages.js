@@ -40,7 +40,7 @@ var config = {
 			 */
 			Data : null,
 			
-			Update:null
+			Update:null,						
 		},
 		/**
 		 * Context Path
@@ -99,6 +99,20 @@ var config = {
 					alert(data.msg);
 				}
 			});
+		},
+		Roleset:function() {
+			var roletype=$("#roletype").val();
+			if(roletype==2){
+				$(".mebset").hide();
+				$("#couset").hide();	
+				$("#finset").hide();
+				$("#perset").hide();
+			}else if(roletype==3){				
+				$(".mebset").hide();
+				$("#stuset").hide();	
+				$("#finset").hide();
+				$("#perset").hide();
+			}
 		},
 		Update:function(url, g) {
 			if (!url)
@@ -414,6 +428,7 @@ var config = {
 		isLogin : function() {
 			return !$.isEmpty($.page.user);
 		},
+		
 		/**
 		 * clear cookies
 		 */

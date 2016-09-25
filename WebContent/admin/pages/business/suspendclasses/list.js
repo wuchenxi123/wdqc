@@ -20,7 +20,7 @@ $(document).ready(function() {
 	      pagingType: "simple_numbers",
 	      aLengthMenu:[10,5,20,50,100,500],
 	      ajax: {
-	          "url": ctx+'/st_List.ac?param._ne_stStatus=0',
+	          "url": ctx+'/st_ListByCampus.ac?param._ne_stStatus=0',
 	          "type": "POST",
 	          data : function(d){
 	            	  // add query param to data
@@ -39,7 +39,7 @@ $(document).ready(function() {
 	          orderable: false,
 	          targets: 7
 	      } ], */
-	      order: [[ 2, 'asc' ]],
+	      order: [[ 11, 'desc' ]],
 	      /* aoColumnDefs: [{
 			 sDefaultContent: '',
 			 aTargets: [ '_all' ]
@@ -51,7 +51,7 @@ $(document).ready(function() {
 	  	          { data : "stSex" },
 	  	          { data : "stAge" },
 	  	          { data : "stMobile" },
-	  	          { data : "stEmail" },
+	  	          { data : "stWechat" },
 	  	          { data : "campus" ,orderable : false ,},
 	  	          { data : "stStatus" } ,
 	  	          { data : "stReside" } ,
@@ -60,10 +60,11 @@ $(document).ready(function() {
 	  			  { data : "createTime" } ,
 	  	          {orderable : false ,searchable : false,defaultContent : '' , width : 130}
 	      ], 
-	      fnRowCallback : function(nRow,aData,iDataIndex){			    	  
-			   	var Update = ctx + '/st_Update.ac';
+	      fnRowCallback : function(nRow,aData,iDataIndex){	
+	    	  	var suspendPage = ctx + '/admin/pages/business/suspendclasses/edit.jsp';
+			   	/*var Update = ctx + '/st_Update.ac';*/
 				var html = '<div class="btn-group btn-group-xs" role="group" aria-label="...">';/**/
-				html = html + '<a class="btn" onclick="$.page.Update(\'' +Update+ '?param._pk=' + aData.stId + '\');" > <i class="ion-ios-compose"></i>办理停课</a>';
+				html = html + '<a class="btn" href="javascript:loadPage(\'' + suspendPage + '\',\'' + aData.stId + '\'); " > <i class="ion-ios-compose"></i>办理停课</a>';
 				html = html + '</div>';
 				$('td:eq(-1)', nRow).html(html);
 				$('td:eq(2)', nRow).html(aData.stSex=='0'?'男':'女');
@@ -83,17 +84,6 @@ $(document).ready(function() {
 
 				}
 				$('td:eq(7)', nRow).html(stStatus);
-				/*$('td:eq(7)', nRow).html(aData.stStatus=='1'?'上课':'已结课');*/
-	/*			var names="";
-				Grad=aData.grad;
-				for ( var i = 0; i < Grad.datas.length; i++) {
-					names=Grad.datas[i].gradlass.csName;
-					var html='<table><thead><tr>'+names+'</tr></thead></table>';
-					$('td:eq(11)', nRow).append(html);
-					
-				}*/
-				
-
 				return nRow;
 	      },
 	      oLanguage : $.dt.oLanguage,
@@ -108,7 +98,23 @@ $(document).ready(function() {
 	    } );
 	    
 	    $.page.set({
-	    	Grid : grid
+	    	Grid : grid,
+	    	Update:function(url, g) {
+			if (!url)
+				url = $.page.config.Update;
+			if (!g)
+				g = $.page.config.Grid;
+			$.post(url, {
+
+			}, function(data, textStatus, jqXHR) {
+				if ("success" == textStatus) {
+					// refresh datatables
+					g.draw();
+				} else {
+					alert(data.msg);
+				}
+			});
+		},
 	    });
 	  });
 	function addQueryParam(data){

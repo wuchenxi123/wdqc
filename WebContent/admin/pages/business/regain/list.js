@@ -20,7 +20,7 @@ $(document).ready(function() {
 	      pagingType: "simple_numbers",
 	      aLengthMenu:[10,5,20,50,100,500],
 	      ajax: {
-	          "url": ctx+'/st_List.ac?param._ne_stStatus=1',
+	          "url": ctx+'/st_ListByCampus.ac?param._ne_stStatus=1',
 	          "type": "POST",
 	          data : function(d){
 	            	  // add query param to data
@@ -39,7 +39,7 @@ $(document).ready(function() {
 	          orderable: false,
 	          targets: 7
 	      } ], */
-	      order: [[ 2, 'asc' ]],
+	      order: [[ 13, 'desc' ]],
 	      /* aoColumnDefs: [{
 			 sDefaultContent: '',
 			 aTargets: [ '_all' ]
@@ -51,17 +51,21 @@ $(document).ready(function() {
 	  	          { data : "stSex" },
 	  	          { data : "stAge" },
 	  	          { data : "stMobile" },
-	  	          { data : "stEmail" },
+	  	          { data : "stWechat" },
 	  	          { data : "campus" ,orderable : false ,},
 	  	          { data : "stStatus" } ,
 	  	          { data : "stReside" } ,
 	  	          { data : "creatorname",orderable : false , } ,	         
 	  			  {	data : "salerName",orderable : false ,defaultContent : '无' ,},
 	  			  { data : "createTime" } ,
+	  			  { data : "stReason",defaultContent : '无'  } ,
+	  			  { data : "spendclassTime" ,defaultContent : '无'} ,
+	  			  { data : "expectTime",defaultContent : '无'  } ,
+	  			  { data : "stAmount" ,defaultContent : '无' ,} ,
 	  	          {orderable : false ,searchable : false,defaultContent : '' , width : 130}
 	      ], 
 	      fnRowCallback : function(nRow,aData,iDataIndex){			    	  
-			   	var Update = ctx + '/st_Update.ac';
+			   	var Update = ctx + '/st_RenewClass.ac';
 				var html = '<div class="btn-group btn-group-xs" role="group" aria-label="...">';
 				html = html + '<a class="btn" onclick="$.page.Update(\'' +Update+ '?param._pk=' + aData.stId + '\');"> <i class="ion-ios-compose"></i>结束停课</a>';
 				html = html + '</div>';

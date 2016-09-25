@@ -147,13 +147,7 @@ $(document).ready(function() {
 	}
 	function exportGradlass(url) {
 		url =ctx+'/cs_GetExport.ac';
-			$.post(url, {
-			}, function(data, textStatus, jqXHR) {
-				if ("success" == textStatus) {
-					alert("数据导出成功");		
-					}							
-			
-		}); 
+		window.open(url);
 	};
 	function reload(){
 		grid.ajax.reload();

@@ -62,17 +62,16 @@ $.page.set({
 					            $.apply(d,p);
 					            }
 					      },
-					      order: [[ 9, 'asc' ]],
+					      order: [[ 8, 'asc' ]],
 					      columns: [
 					  			  { orderable : false ,searchable : false ,defaultContent : ''},			  
 					  			  { data : "stName" },
 						          { data : "stSex" },
 						          { data : "stAge" },
 						          { data : "stMobile" },
-						          { data : "stEmail" },
 						          { data : "stStatus" } ,
 						          { data : "stReside" } ,
-						          { data : "creatorname",orderable : false , } ,	         
+						          { data : "salerName",orderable : false , } ,	         
 								  { data : "createTime" } ,
 					  	          {orderable : false ,searchable : false,defaultContent : '' , width : 130}
 					  	      ], 
@@ -97,7 +96,7 @@ $.page.set({
 								default:
 
 								}
-								$('td:eq(7)', nRow).html(stStatus);
+								$('td:eq(5)', nRow).html(stStatus);
 								return nRow;
 					      },
 					      oLanguage : $.dt.oLanguage,

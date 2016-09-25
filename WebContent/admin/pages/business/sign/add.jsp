@@ -52,6 +52,8 @@
 							name="form.cltSaletextbookid" id="form.cltSaletextbookid"
 							type="text" class="form-control hidden"> <input
 							name="form.cltReduce" id="form.cltReduce" type="text"
+							class="form-control hidden"><input
+							name="form.cpId" id="form.cpId" type="text"
 							class="form-control hidden">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
@@ -128,9 +130,9 @@
 												<div class="col-sm-12">
 													<div class="col-sm-4">
 														<div class="form-group">
-															<label class="col-sm-4 control-label">学员邮箱：</label>
+															<label class="col-sm-4 control-label">微信qq：</label>
 															<div class="col-sm-8">
-																<input name="form.stEmail" id="form.stEmail" type="text"
+																<input name="form.stWechat" id="form.stWechat" type="text"
 																	class="form-control">
 															</div>
 														</div>
@@ -168,11 +170,11 @@
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label class="col-sm-4 control-label">报名校区：</label>
-															<div class="col-sm-8">
+															<div class="col-sm-8" >
 																<select class="form-control"
 																	name="form.stLocationSchool" id="form.stLocationSchool">
 
-																</select>
+																</select >
 															</div>
 														</div>
 													</div>
@@ -185,6 +187,21 @@
 																	<option value="1">无</option>
 																	<option value="2">李建</option>
 																	<option value="3">张华</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-4">
+														<div class="form-group">
+															<label class="col-sm-4 control-label">营销来源：</label>
+															<div class="col-sm-8">
+																<select class="form-control" name="form.stPlace"
+																	id="form.stPlace">
+																	<option value="1">无</option>
+																	<option value="2">老生介绍新生</option>
+																	<option value="3">传单宣发</option>
+																	<option value="4">新生介绍新生</option>
+																	<option value="5">两人同报</option>
 																</select>
 															</div>
 														</div>

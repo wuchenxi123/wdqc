@@ -9,6 +9,7 @@ import com.core.jop.infrastructure.db.DBQueryParam;
  */
 public class CostlistDBParam extends DBQueryParam {
     private String _ne_cltId;
+    private String _ne_cpId;
     private String _ne_stId;
     private String _ne_csId;
     private String _ne_cltType;
@@ -245,6 +246,12 @@ public class CostlistDBParam extends DBQueryParam {
 	}
 	public void set_dm_createTime(String _dm_createTime) {
 		this._dm_createTime = _dm_createTime;
+	}
+	public String get_ne_cpId() {
+		return _ne_cpId;
+	}
+	public void set_ne_cpId(String _ne_cpId) {
+		this._ne_cpId = _ne_cpId;
 	}
 
 }

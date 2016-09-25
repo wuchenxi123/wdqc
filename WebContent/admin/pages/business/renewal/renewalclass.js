@@ -123,6 +123,7 @@ $.page.set({
 		$("[id='form.cltApply']").val(apply);
 		$("[id='form.cltReduce']").val(b);
 		$("[id='form.cltSum']").val(costsum);
+		$("[id='form.cpId']").val($("[id='form.stLocationSchool']").val());
 		// 完成保存页面跳转
 		if (!url)
 			url = ctx + "/ct_Save.ac";

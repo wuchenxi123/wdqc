@@ -110,12 +110,14 @@ $.page.set({
 						$.page.config.fnLoadTime($("[id='form.csOpendatestart']").val(),$("[id='form.csOpendateend']").val());
 						$("[id='form.csOpendatestart']").val()==""||null?
 								$("[id='form.csOpendatestatus']").prop("checked", true):$("[id='form.csOpendatestatus']").prop("checked", false);
-						var str=$("[id='form.csWeekend']").val();
-						
-						var arr=str.split(',');
-						$.each(arr,function(i,item){
-							$("input[name='csWeekend'][value="+item+"]").attr("checked","checked");
-						});
+						var str=$.trim($("[id='form.csWeekend']").val());
+						if(str!=null&&str.length>0){
+							var arr=str.split(',');
+							$.each(arr,function(i,item){
+								$("input[name='csWeekend'][value="+item+"]").attr("checked","checked");
+							});
+							
+						}
 						$("[id='form.csWeekend']").val(str);
 						$("[id='form.csDateStartHour']").val()==null?
 								$("[id='form.classtime']").prop("checked", true):$("[id='form.classtime']").prop("checked", false);

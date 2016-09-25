@@ -248,7 +248,7 @@ public class GradlassBO extends AbstractControlBean implements Gradlass {
 		return vo;
 	}
 	/**
-	 * åˆ é™¤
+	 * É¾³ý
 	 */
 	public void doDel(List<String> ids) throws Exception {
 		GradlassDAO dao = (GradlassDAO) DAOFactory.build(

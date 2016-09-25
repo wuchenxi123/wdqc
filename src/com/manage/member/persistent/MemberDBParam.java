@@ -8,8 +8,13 @@ import com.core.jop.infrastructure.db.DBQueryParam;
  * @version 1.0
  */
 public class MemberDBParam extends DBQueryParam {
-    private String _ne_mbId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String _ne_mbId;
     private String _ne_roleId;
+    private String _ne_cpId;
     private String _se_mbName;
     private String _sk_mbName;
     private String _se_mbPetName;
@@ -251,6 +256,12 @@ public class MemberDBParam extends DBQueryParam {
 	}
 	public void set_se_mbPassword(String _se_mbPassword) {
 		this._se_mbPassword = _se_mbPassword;
+	}
+	public String get_ne_cpId() {
+		return _ne_cpId;
+	}
+	public void set_ne_cpId(String _ne_cpId) {
+		this._ne_cpId = _ne_cpId;
 	}
 
 }

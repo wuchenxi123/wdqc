@@ -19,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFHeader;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
 
 import com.core.jop.infrastructure.db.AbstractDAO;
@@ -180,15 +181,23 @@ public class TeacherDAO extends AbstractDAO {
 		Date date=new Date();
 		SimpleDateFormat d=new SimpleDateFormat("yyyyMMddHHmmss");
 		String datestring=d.format(date);
-		String filename="教师名单"+datestring;
-		System.out.println(filename);
-		String path="C:/Users/Administrator/Desktop/Chart/"+filename+".xls";
+		String filename="/教师名单"+datestring;
+//		String filedir="D:/test";
+		String filedir=ServletActionContext.getServletContext().getRealPath("/")+"File";
+		String path=filedir+filename+".xls";
 		try {
-			out = new FileOutputStream(
-					new File(path));
-			// response =
-			// ServletActionContext.getResponse();//初始化HttpServletResponse对象
-			// out = response.getOutputStream();//
+			File file=new File(path);
+			File files=new File(filedir);			
+			if  (!files.exists()  && !files.isDirectory())      
+			{       
+			    System.out.println("//不存在"); 
+			    files.mkdir(); 
+			      
+			} else   
+			{  
+			    System.out.println("//目录存在");  
+			} 
+			out = new FileOutputStream(file);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -196,7 +205,6 @@ public class TeacherDAO extends AbstractDAO {
 		try {
 			workbook.write(out);
 			out.flush();
-			workbook.write(out);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -208,6 +216,6 @@ public class TeacherDAO extends AbstractDAO {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return path;
 	}
 }

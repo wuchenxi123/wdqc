@@ -24,8 +24,7 @@
 <link rel="stylesheet" href="<%=ctx%>/admin/plugins/iCheck/square/blue.css">
 
 
-<link rel="stylesheet" type="text/css"
-	href="<%=ctx%>/admin/plugins/jquery-step/css/jquery.step.css">
+<link rel="stylesheet" type="text/css" href="<%=ctx%>/admin/plugins/jquery-step/css/jquery.step.css">
 
 <link type="text/css" rel="stylesheet" href="<%=ctx%>/admin/dist/css/css.css" />
 

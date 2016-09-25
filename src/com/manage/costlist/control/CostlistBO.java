@@ -81,7 +81,8 @@ public class CostlistBO extends AbstractControlBean implements
 			for (Object vo : dp.getDatas()) {
 				CostlistVO o = (CostlistVO) vo;
 				this.fillUser(o);
-				this.fillGrad(o);			
+				this.fillGrad(o);	
+				this.fillCampus(o);
 			}
 		}
 		return dp;
@@ -105,14 +106,25 @@ public class CostlistBO extends AbstractControlBean implements
 	private CostlistVO fillGrad(CostlistVO vo) throws Exception {
 		GradlassDAO dao = (GradlassDAO) DAOFactory.build(GradlassDAO.class, user);
 		GradlassVO c = (GradlassVO) dao.findByPk(Long.valueOf(vo.getCsId()));
-		vo.setCsname(c.getCsName());
-		vo.setCscharge(String.valueOf(c.getCsCharge()));
+		if(c==null){
+			vo.setCsname(null);
+			vo.setCscharge(null);
+		}else{
+			vo.setCsname(c.getCsName());
+			vo.setCscharge(String.valueOf(c.getCsCharge()));
+		}		
 		return vo;
 	}
 	private CostlistVO fillUser(CostlistVO vo) throws Exception {
 		MemberDAO dao = (MemberDAO) DAOFactory.build(MemberDAO.class, user);
 		MemberVO c = (MemberVO) dao.findByPk(Integer.valueOf(vo.getCreator()));
 		vo.setMember(c.getMbPetName());
+		return vo;
+	}
+	private CostlistVO fillCampus(CostlistVO vo) throws Exception {
+		CampusDAO dao = (CampusDAO) DAOFactory.build(CampusDAO.class, user);
+		CampusVO c = (CampusVO) dao.findByPk(Long.valueOf(vo.getCpId()));
+		vo.setCampus(c.getCpName());
 		return vo;
 	}
 	public void doDel(List<String> ids) throws Exception {

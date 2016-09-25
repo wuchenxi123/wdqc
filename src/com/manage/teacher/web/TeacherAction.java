@@ -20,6 +20,7 @@ import com.core.jop.infrastructure.db.DataPackage;
 import com.core.jop.ui.struts2.BaseAction;
 import com.core.sys.util.PageUtils;
 import com.core.sys.util.object.DataTablePage;
+import com.manage.extra.ExtraDAO;
 import com.manage.gradlass.persistent.GradlassVO;
 import com.manage.teacher.control.Teacher;
 import com.manage.teacher.control.TeacherBO;
@@ -122,8 +123,8 @@ public class TeacherAction extends BaseAction{
 			if (null == vo.getTeId()) {
 				/*vo.setCreator(this.getDBAccessUser().getOperid());*/
 				vo = bo.doCreate(vo);
-				vo.setGradlassteacher(vo.getTeId());
-				vo = bo.doUpdate(vo);
+//				vo.setGradlassteacher(vo.getTeId());
+//				vo = bo.doUpdate(vo);
 			} else {
 				vo = bo.doUpdate(vo);
 			}
@@ -179,7 +180,9 @@ public class TeacherAction extends BaseAction{
 				this.getDBAccessUser());
 		DataPackage dp = bo.doQuery(params);
 		TeacherDAO dao = (TeacherDAO) DAOFactory.build(TeacherDAO.class, this.getDBAccessUser());
-		dao.extport(dp);
+		String path=dao.extport(dp);
+		ExtraDAO my=new ExtraDAO();
+		my.doDownLoad(path, response);
 		return null;		
 	}
 }

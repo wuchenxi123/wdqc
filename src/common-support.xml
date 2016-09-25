@@ -40,7 +40,9 @@
 		</action>
 
 		<!--班级管理 -->
-
+<action name="tc_*" method="{1}"
+			class="com.manage.teachercourse.web.TeacherCourseAction">
+		</action>
 
 		<action name="cs_*" method="{1}"
 			class="com.manage.gradlass.web.GradlassAction">
@@ -107,12 +109,20 @@
 			class="com.manage.message.web.MessageAction">
 		</action>
 		
-	</package>
-	<package name="ext" namespace="/extra" extends="struts-default">
-	     <action name="*" class="com.manage.extra.ExtraAction" method="{1}">
+		<!--财务管理 -->
+		<action name="cw_*" method="{1}" class="com.manage.expand.web.ExpandAction">
 		</action>
-	</package>
-	<package name="java" namespace="/" extends="wagon-default">
+		<action name="io_*" method="{1}" class="com.manage.incomeother.web.IncomeOtherAction">
+		</action>
+		<action name="ic_*" method="{1}" class="com.manage.income.web.IncomeAction">
+		</action>
+		
+		</package>
+		<package name="ext" namespace="/extra" extends="struts-default">
+		     <action name="*" class="com.manage.extra.ExtraAction" method="{1}">
+			</action>
+		</package>
+		<package name="java" namespace="/" extends="wagon-default">
 		<action name="pk_*" class="com.core.sys.code2name.web.PickerAction"
 			method="{1}">
 

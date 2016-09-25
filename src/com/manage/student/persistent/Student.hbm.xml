@@ -14,7 +14,10 @@
 <property column="st_name" length="50" name="stName" type="java.lang.String"/>
 <property column="st_age" length="3" name="stAge" type="java.lang.String"/>
 <property column="st_mobile" length="20" name="stMobile" type="java.lang.String"/>
-<property column="st_email" length="255" name="stEmail" type="java.lang.String"/>
+<property column="st_place" length="10" name="stPlace" type="java.lang.Integer"/>
+<property column="st_reason" length="255" name="stReason" type="java.lang.String"/>
+<property column="st_amount" length="40" name="stAmount" type="java.lang.Double"/>
+<property column="st_wechat" length="40" name="stWechat" type="java.lang.String"/>
 <property column="st_location_school" length="255" name="stLocationSchool" type="java.lang.String"/>
 <property column="st_hobbies" length="255" name="stHobbies" type="java.lang.String"/>
 <property column="st_remark" length="255" name="stRemark" type="java.lang.String"/>
@@ -34,9 +37,12 @@
 <property column="st_costid" length="10" name="stCostid" type="java.lang.Integer"/>
 <property column="st_communicateId" length="10" name="stCommunicateid" type="java.lang.Integer"/>
 <property column="st_slotcardId" length="10" name="stSlotcardid" type="java.lang.Integer"/>
-<property column="create_time" name="createTime" type="java.util.Date"/>
 <property column="creator" length="10" name="creator" type="java.lang.Integer"/>
-<property column="update_time" name="updateTime" type="java.util.Date"/>
+<property column="create_time" name="createTime" type="java.util.Date"/>
 <property column="updator" length="10" name="updator" type="java.lang.Integer"/>
+<property column="update_time" name="updateTime" type="java.util.Date"/>
+<property column="expect_time" name="expectTime" type="java.util.Date"/>
+<property column="spendclass_time" name="spendclassTime" type="java.util.Date"/>
+<property column="regainclass_time" name="regainclassTime" type="java.util.Date"/>
 </class>
 </hibernate-mapping>

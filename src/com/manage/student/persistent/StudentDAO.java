@@ -20,6 +20,7 @@ import org.apache.poi.hssf.usermodel.HSSFHeader;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
 
 import com.core.jop.infrastructure.db.AbstractDAO;
@@ -130,9 +131,9 @@ public class StudentDAO extends AbstractDAO {
 				cell = row.createCell(4);
 				cell.setCellValue(student1.getStMotherMobile());
 			}
-			if (student1.getStEmail() != null) {
+			if (student1.getStWechat() != null) {
 				cell = row.createCell(5);
-				cell.setCellValue(student1.getStEmail());
+				cell.setCellValue(student1.getStWechat());
 			}
 			if (student1.getStReside() != null) {
 				cell = row.createCell(6);
@@ -158,7 +159,7 @@ public class StudentDAO extends AbstractDAO {
 				for (int k = 0; k < cellNumber; k++) {
 					cell = row.createCell(k);// 创建第0行第k列
 					cell.setCellValue(tableHeader[k]);// 设置第0行第k列的值
-					sheet.setColumnWidth(k, 8000);// 设置列的宽度
+					sheet.setColumnWidth(k, 4000);// 设置列的宽度
 					font.setColor(HSSFFont.COLOR_NORMAL); // 设置单元格字体的颜色.
 					font.setFontHeight((short) 350); // 设置单元字体高度
 				}
@@ -174,11 +175,24 @@ public class StudentDAO extends AbstractDAO {
 		Date date = new Date();
 		SimpleDateFormat d = new SimpleDateFormat("yyyyMMddHHmmss");
 		String datestring = d.format(date);
-		String filename = "学生报名表" + datestring;
-		String filePath = "C:/Users/USER/Desktop/" + filename + ".xls";
-		System.out.println(filePath);
+		String filename = "/学生报名表" + datestring;
+//		String filedir="D:/test";
+		String filedir=ServletActionContext.getServletContext().getRealPath("/")+"File";
+		String filePath =  filedir + filename + ".xls";
 		try {
-			out = new FileOutputStream(new File(filePath));
+			
+			File file=new File(filePath);
+			File files=new File(filedir);			
+			if  (!files.exists()  && !files.isDirectory())      
+			{       
+			    System.out.println("//不存在"); 
+			    files.mkdir(); 
+			      
+			} else   
+			{  
+			    System.out.println("//目录存在");  
+			}  
+			out = new FileOutputStream(file);
 			// response =
 			// ServletActionContext.getResponse();//初始化HttpServletResponse对象
 			// out = response.getOutputStream();//
@@ -189,7 +203,7 @@ public class StudentDAO extends AbstractDAO {
 		try {
 			workbook.write(out);
 			out.flush();
-			workbook.write(out);
+		/*	workbook.write(out);*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

@@ -33,11 +33,11 @@
 			<img class="logo" src="dist/images/logo1.png"
 				style="margin-left: 25px;" />
 			<ul class="nav">
-				<li><a href="#stu" data-toggle="tab"><i class="ion-film-marker"></i>&nbsp;前台业务</a></li>
-				<li><a href="#cou" data-toggle="tab"><i class="ion-printer"></i>&nbsp;教务教学</a></li>
-				<li><a href="#per" data-toggle="tab"><i class="ion-person-stalker"></i>&nbsp;人事管理</a></li>
-				<li><a href="#fin" data-toggle="tab"><i class="ion-clipboard"></i>&nbsp;财务管理</a></li>
-				<li><a href="#mar" data-toggle="tab"><i class="ion-arrow-graph-up-right"></i>&nbsp;市场分析</a></li>
+				<li id="stuset"><a href="#stu" data-toggle="tab"><i class="ion-film-marker"></i>&nbsp;前台业务</a></li>
+				<li id="couset"><a href="#cou" data-toggle="tab"><i class="ion-printer"></i>&nbsp;教务教学</a></li>
+				<li id="perset"><a href="#per" data-toggle="tab"><i class="ion-person-stalker"></i>&nbsp;人事管理</a></li>
+				<li id="finset"><a href="#fin" data-toggle="tab"><i class="ion-clipboard"></i>&nbsp;财务管理</a></li>
+				<li id="marset"><a href="#mar" data-toggle="tab"><i class="ion-arrow-graph-up-right"></i>&nbsp;市场分析</a></li>
 			<!-- 	<li><a href="#che" data-toggle="tab"><i class="ion-card"></i>&nbsp;磁卡考勤</a></li> -->
 				<li><a href="#set" data-toggle="tab"><i class="ion-gear-b"></i>&nbsp;系统设置</a></li>
 			</ul>
@@ -53,30 +53,30 @@
 				<div class="pepdet">
 					<p class="pepname"><%=user.getMbName()%></p>
 					<p><%=user.getMbPetName()%></p>
+					<input id="roletype" type="hidden" value="<%=user.getMbType()%>">
+					<input id="cpId" type="hidden" value="<%=user.getCpId()%>">
 				</div>
 				<br><br><br><br><br>
 				<div class="form-group">
-					<label class="col-sm-7 control-label">報名总數：</label>
-					<div class="col-sm-5">
+					<label class="col-sm-6 control-label">報名总數：</label>
+					<div class="col-sm-6">
 						<span id="sgincount">1277</span>
 					</div>
 				</div>
 				<br>
 				<div class="form-group">
-					<label class="col-sm-7 control-label">收入总数：</label>
-					<div class="col-sm-5">
+					<label class="col-sm-6 control-label">收入总数：</label>
+					<div class="col-sm-6">
 						<span style="width: 145px;" id="fedsum" class="text-danger">￥12万</span>
 					</div>
-			</div>
-				<!-- <div class="form-group">
-					<label class="col-sm-5 control-label">校区：</label>
-					<div class="col-sm-7">
-						<select name="form.stSex" id="form.stSex">
-							 <option value="1">湖南衡阳校区</option>
-							 <option value="2">湖南省湘潭校区</option>
-						 </select>
+				</div>
+				<br>
+				<div class="form-group">
+					<label class="col-sm-6 control-label">校区：</label>
+					<div class="col-sm-6" id="campusname">
+						湘潭校区						
 					</div>
-				</div> -->
+				</div>
 			</div>
 			<div class="lm01">
 				<a href="javascript:loadPage('<%=ctx%>/admin/pages/business/consult/list.jsp');"><i class="ion-ios-paper"></i>&nbsp;资询记录<i class="ion-chevron-right pull-right"></i></a>				
@@ -145,25 +145,30 @@
 			</div>
 			<div class="currmenu tab-pane fade" id="fin">
 				<ul class="rig_nav">
-					<li class="rig_seleli"><a href="#"><i class="ion-ios-compose text-danger"></i>&nbsp;财务日报</a></li>
+					<li class="rig_seleli"><a href="javascript:loadPage('<%=ctx%>/admin/pages/finance/expand/list.jsp');"><i class="ion-ios-compose text-danger"></i>&nbsp;日常支出</a></li>
+					<li class="rig_seleli"><a href="javascript:loadPage('<%=ctx%>/admin/pages/finance/expand/add.jsp');"><i class="ion-ios-compose text-danger"></i>&nbsp;添加支出</a></li>
 					<li><a href="#"><i class="ion-ios-pulse-strong text-danger"></i>&nbsp;流水账</a></li>
 					<li><a href="#"><i class="ion-ios-settings text-danger"></i>&nbsp;分析报表</a></li>
+					<li class="rig_seleli"><a href="javascript:loadPage('<%=ctx%>/admin/pages/finance/income/list.jsp');"><i class="ion-ios-compose text-danger"></i>&nbsp;日常收入</a></li>
+					<li class="rig_seleli"><a href="javascript:loadPage('<%=ctx%>/admin/pages/finance/income/add.jsp');"><i class="ion-ios-compose text-danger"></i>&nbsp;添加收入</a></li>
+					<li class="rig_seleli"><a href="javascript:loadPage('<%=ctx%>/admin/pages/finance/incomeother/list.jsp');"><i class="ion-ios-compose text-danger"></i>&nbsp;收入项目</a></li>
+					<li class="rig_seleli"><a href="javascript:loadPage('<%=ctx%>/admin/pages/finance/incomeother/add.jsp');"><i class="ion-ios-compose text-danger"></i>&nbsp;添加项目</a></li>
 				</ul>
 			</div>
 			<div class="currmenu tab-pane fade" id="mar">
 				<ul class="rig_nav">
 					<li class="rig_seleli"><a href="javascript:loadPage('<%=ctx%>/admin/pages/chart/info.jsp');"><i class="ion-ios-pie text-danger"></i>&nbsp;分析首页</a></li>
 					<li><a
-						href="#"><i class="ion-ios-pulse-strong text-danger"></i>&nbsp;收入分析</a></li>
-					<li><a href="#"><i class="ion-ios-pulse-strong text-danger"></i>&nbsp;学员分析</a></li>
+						href="javascript:loadPage('<%=ctx%>/admin/pages/chart/info2.jsp');"><i class="ion-ios-pulse-strong text-danger"></i>&nbsp;收入分析</a></li>
+					<li><a href="javascript:loadPage('<%=ctx%>/admin/pages/chart/info3.jsp');"><i class="ion-ios-pulse-strong text-danger"></i>&nbsp;学员分析</a></li>
 				</ul>
 			</div>
 			<div class="currmenu tab-pane fade" id="set">
 				<ul class="rig_nav">
-					<li class="rig_seleli">
+					<li class="rig_seleli mebset">
 						<a href="javascript:loadPage('<%=ctx%>/admin/pages/member/register.jsp');"><i class="ion-person-add text-danger"></i>&nbsp;添加用户</a>
 					</li>
-					<li>
+					<li class="mebset">
 						<a href="javascript:loadPage('<%=ctx%>/admin/pages/member/list.jsp');"><i class="ion-clipboard text-danger"></i>&nbsp;用户列表</a>
 					</li>
 					<li>

@@ -53,6 +53,8 @@
 							name="form.cltReduce" id="form.cltReduce" type="text"
 							class="form-control hidden"> <input
 							name="form.csPeoplecount" id="form.csPeoplecount" type="text"
+							class="form-control hidden"><input
+							name="form.cpId" id="form.cpId" type="text"
 							class="form-control hidden">
 						<div class="panel panel-primary ">
 							<div class="panel-heading">

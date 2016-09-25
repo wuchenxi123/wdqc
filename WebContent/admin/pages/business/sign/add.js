@@ -23,15 +23,15 @@ $.page.set({
 
 		}, function(data, textStatus, jqXHR) {
 			if ("success" == textStatus) {
+				var cpId=$("#cpId").val();
 				for ( var i = 0; i < data.datas.length; i++) {
-					var html = '<option value="' + data.datas[i].cpId + '">'
-							+ data.datas[i].cpName + '</option>';
-					$("[id='form.stLocationSchool']").append(html);
-				}
-				/**/
-				// laod form datas
-				$.page.formLoad();
-
+					if(data.datas[i].cpId==cpId){
+						var html = '<option value="' + data.datas[i].cpId + '">'
+						+ data.datas[i].cpName + '</option>';
+						$("[id='form.stLocationSchool']").append(html);
+					}
+					
+				}								
 			}
 		});
 	},
@@ -75,7 +75,7 @@ $.page.set({
 				'form.stEmail' : {
 					validators : {
 						notEmpty : {
-							message : '邮箱不能为空'
+							message : '微信不能为空'
 						}
 					}
 				},
@@ -111,6 +111,7 @@ $.page.set({
 		$("[id='form.cltApply']").val(apply);
 		$("[id='form.cltReduce']").val(b);
 		$("[id='form.cltSum']").val(costsum);
+		$("[id='form.cpId']").val($("[id='form.stLocationSchool']").val());
 		// 完成保存页面跳转
 		if (!url)
 			url = ctx + "/ct_Save.ac";
@@ -168,12 +169,5 @@ $.page.set({
 
 $(document).ready(function() {
 	$.page.config.fnLoadCampus();
-	$.page.formLoad();
-	// form validator
-	$.page.config.fnInitValidator();
-	/*
-	 * $("#reduse").blur(function(){ var sum=$("#charge").text(); var
-	 * b=$("#reduse").val(); alert(b); c=parseInt(sum)-parseInt(b); alert(c);
-	 * $("[id='form.cltSum']").val(c); $("#charge").text(c); });
-	 */
+	$.page.config.fnInitValidator();	
 });

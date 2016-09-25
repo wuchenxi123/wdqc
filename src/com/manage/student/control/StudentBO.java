@@ -103,10 +103,6 @@ public class StudentBO extends AbstractControlBean implements
 				this.fillUser(o);
 				this.fillCampus(o);
 				this.fillSaler(o);
-				/*this.fillCostinfo(o);*/
-			/*	this.fillGrad(o);*/
-				/*this.fillGradlass(o);*/
-				
 			}
 		}
 		return dao.query(params);

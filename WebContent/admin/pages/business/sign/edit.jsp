@@ -119,9 +119,9 @@
 												<div class="col-sm-12">
 													<div class="col-sm-4">
 														<div class="form-group">
-															<label class="col-sm-4 control-label">学员邮箱：</label>
+															<label class="col-sm-4 control-label">微信qq：</label>
 															<div class="col-sm-8">
-																<input name="form.stEmail" id="form.stEmail" type="text"
+																<input name="form.stWechat" id="form.stWechat" type="text"
 																	class="form-control">
 															</div>
 														</div>

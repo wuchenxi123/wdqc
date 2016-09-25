@@ -14,6 +14,9 @@ public class MemberVO extends BaseVO implements Serializable {
 
     /** nullable persistent field */
     private Integer roleId;
+    
+    private Integer cpId;
+    
     private String roleName;
     /** nullable persistent field */
     private String mbName;
@@ -222,6 +225,14 @@ public class MemberVO extends BaseVO implements Serializable {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public Integer getCpId() {
+		return cpId;
+	}
+
+	public void setCpId(Integer cpId) {
+		this.cpId = cpId;
 	}
 
 }

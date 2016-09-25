@@ -20,7 +20,7 @@ $(document).ready(function() {
 	      pagingType: "simple_numbers",
 	      aLengthMenu:[10,5,20,50,100,500],
 	      ajax: {
-	          "url": ctx+'/st_List.ac',
+	          "url":ctx+'/st_ListByCampus.ac',
 	          "type": "POST",
 	          data : function(d){
 	            	  // add query param to data
@@ -51,7 +51,7 @@ $(document).ready(function() {
 	  	          { data : "stSex" },
 	  	          { data : "stAge" },
 	  	          { data : "stMobile" },
-	  	          { data : "stEmail" },
+	  	          { data : "stWechat" },
 	  	          { data : "campus" ,orderable : false ,},
 	  	          { data : "stStatus" } ,
 	  	          { data : "stReside" } ,

@@ -67,7 +67,7 @@
 									<th>性别</th>
 									<th>资询方式</th>
 									<th>电话</th>
-									<th>email</th>
+									<th>微信号</th>
 									<th>兴趣</th>
 									<th>地址</th>
 									<th>资询课程</th>
@@ -85,7 +85,7 @@
 									<th>性别</th>	
 									<th>资询方式</th>	
 									<th>电话</th>
-									<th>email</th>
+									<th>微信号</th>
 									<th>兴趣</th>
 									<th>地址</th>
 									<th>资询课程</th>

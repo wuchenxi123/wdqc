@@ -19,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFHeader;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
 
 import com.core.jop.infrastructure.db.AbstractDAO;
@@ -117,15 +118,18 @@ public class GradlassDAO extends AbstractDAO {
      * @param list
      * @throws SQLException
      */
-    public void doDel(List<String> list) throws SQLException {
+    @SuppressWarnings("null")
+	public void doDel(List<String> list) throws SQLException {
     	Hibernate3SessionManager sm = (Hibernate3SessionManager) this
 				.getSessionManager();
 		Connection con = ((Session) sm.getCurrentSession()).connection();
 		PreparedStatement ds = null;
 		PreparedStatement dsi = null;
+		PreparedStatement dsii = null;
 		try {
 			ds = con.prepareStatement("delete from ms_class_teacher where gradlassId = ?");
 			dsi = con.prepareStatement("delete from ms_gradlass where cs_id = ?");
+			dsii = con.prepareStatement("delete from ms_studentclass where cs_id = ?");
 			for (int i = 0; i < list.size(); i++) {
 				Integer sbId = Integer.valueOf(list.get(i).trim());
 				ds.setInt(1, sbId);
@@ -133,12 +137,16 @@ public class GradlassDAO extends AbstractDAO {
 				
 				dsi.setInt(1, sbId);
 				dsi.addBatch();
+				
+				dsii.setInt(1, sbId);
+				dsii.addBatch();
 			}
 			
 			boolean ac = con.getAutoCommit();
 			if (ac) {
 				con.setAutoCommit(false);
 			}
+			dsii.executeBatch();		
 			ds.executeBatch();
 			dsi.executeBatch();
 			con.commit();
@@ -152,6 +160,9 @@ public class GradlassDAO extends AbstractDAO {
 			}
 			if (null != dsi) {
 				dsi.close();
+			}
+			if (null != dsii) {
+				dsii.close();
 			}
 		}
     }
@@ -264,12 +275,25 @@ public class GradlassDAO extends AbstractDAO {
 		Date date=new Date();
 		SimpleDateFormat d=new SimpleDateFormat("yyyyMMddHHmmss");
 		String datestring=d.format(date);
-		String filename="班级列表"+datestring;
-		System.out.println(filename);
-		String path="C:/Users/Administrator/Desktop/Chart/"+filename+".xls";
+		String filename="/班级列表"+datestring;
+		System.out.println(ServletActionContext.getServletContext().getRealPath("/")+"File");
+		String filedir=ServletActionContext.getServletContext().getRealPath("/")+"File";
+		String path=filedir+filename+".xls";
 		try {
-			out = new FileOutputStream(
-					new File(path));
+			
+			File file=new File(path);
+			File files=new File(filedir);			
+			if  (!files.exists()  && !files.isDirectory())      
+			{       
+			    System.out.println("//不存在"); 
+			    files.mkdir(); 
+			      
+			} else   
+			{  
+			    System.out.println("//目录存在");  
+			} 
+			
+			out = new FileOutputStream(file);
 			// response =
 			// ServletActionContext.getResponse();//初始化HttpServletResponse对象
 			// out = response.getOutputStream();//
@@ -280,7 +304,6 @@ public class GradlassDAO extends AbstractDAO {
 		try {
 			workbook.write(out);
 			out.flush();
-			workbook.write(out);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -292,6 +315,6 @@ public class GradlassDAO extends AbstractDAO {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return path;
 	}
 }

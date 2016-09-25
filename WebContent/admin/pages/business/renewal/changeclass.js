@@ -54,7 +54,7 @@ $.page.set({
 			$('#myModal').on('hidden.bs.modal',
 						    function() {								
 					 			$.page.load($.page.config.Return);
-			}) 
+			}) ;
 				
 	},
 	

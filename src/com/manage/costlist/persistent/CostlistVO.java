@@ -14,6 +14,9 @@ public class CostlistVO extends BaseVO implements Serializable {
 
     /** identifier field */
     private Long cltId;
+    
+    /** identifier field */
+    private Integer cpId;
 
     /** nullable persistent field */
     private Integer stId;
@@ -59,6 +62,8 @@ public class CostlistVO extends BaseVO implements Serializable {
     private String csname;
     
     private String cscharge;
+    
+    private String campus;
 
     /** full constructor */
     public CostlistVO(java.lang.Integer stId, java.lang.Integer csId, java.lang.Integer cltType, java.lang.String cltRemark, java.lang.Integer cltReduce, java.lang.String cltSaleboolname, java.lang.Integer cltSaletextbookid, java.lang.Integer cltApply, java.lang.Integer cltSpeical, java.lang.Integer cltSum, java.lang.Integer creator, java.util.Date createTime) {
@@ -234,6 +239,22 @@ public class CostlistVO extends BaseVO implements Serializable {
 
 	public void setCscharge(String cscharge) {
 		this.cscharge = cscharge;
+	}
+
+	public Integer getCpId() {
+		return cpId;
+	}
+
+	public void setCpId(Integer cpId) {
+		this.cpId = cpId;
+	}
+
+	public String getCampus() {
+		return campus;
+	}
+
+	public void setCampus(String campus) {
+		this.campus = campus;
 	}
 
 

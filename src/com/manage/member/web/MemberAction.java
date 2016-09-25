@@ -20,6 +20,9 @@ import com.core.jop.infrastructure.db.DataPackage;
 import com.core.jop.ui.struts2.BaseAction;
 import com.core.sys.util.PageUtils;
 import com.core.sys.util.object.DataTablePage;
+import com.manage.material.control.Material;
+import com.manage.material.control.MaterialBO;
+import com.manage.material.web.MaterialWebParam;
 import com.manage.member.control.Member;
 import com.manage.member.control.MemberBO;
 import com.manage.member.persistent.MemberVO;
@@ -75,6 +78,18 @@ public class MemberAction extends BaseAction{
 		} else {
 			PageUtils.writePage(new DataTablePage(dp), response, "yyyy-MM-dd HH:mm:ss");
 		}
+		return null;
+	}
+	/**
+	 * 查询
+	 */
+	public String doShow() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		this.setParam4DataTable();
+		MemberWebParam params = (MemberWebParam) this.getParam();
+		Member bo = (Member) BOFactory.build(MemberBO.class, this.getDBAccessUser());
+		DataPackage dp = bo.doQuery(params);
+		PageUtils.writePage(dp, response, "yyyy-MM-dd");
 		return null;
 	}
 	/**

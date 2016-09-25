@@ -20,10 +20,14 @@ import com.core.jop.infrastructure.db.DataPackage;
 import com.core.jop.ui.struts2.BaseAction;
 import com.core.sys.util.PageUtils;
 import com.core.sys.util.object.DataTablePage;
+import com.manage.extra.ExtraDAO;
 import com.manage.gradlass.control.Gradlass;
 import com.manage.gradlass.control.GradlassBO;
 import com.manage.gradlass.persistent.GradlassDAO;
 import com.manage.gradlass.persistent.GradlassVO;
+import com.manage.member.control.Member;
+import com.manage.member.control.MemberBO;
+import com.manage.member.persistent.MemberVO;
 import com.manage.student.persistent.StudentVO;
 import com.util.Constants;
 
@@ -41,17 +45,13 @@ public class GradlassAction extends BaseAction{
 	public GradlassAction() {
 		super();
 
-		//????????��?����??��?????
 		this.setForm(new GradlassForm());
 		this.setParam(new GradlassWebParam());
 
-        //???��VO?��
         setClsVO(GradlassVO.class);
-        //???��?��?��??����?????????????��?��???��?��???��?????????��?��??��???????
         this.pkNameArray=new String[]{"csId"};
 		this.setClsControl(Gradlass.class);
 		/**
-		 * ???????��??????????????????BaseAction??CRUD???��?��?????��??Delegate????��??��??????��????��
 		 * this.setClsDelegate(ExampleDelegate.class);
 		 * this.setClsQueryParam(ExampleDBParam.class);
 		 */
@@ -63,8 +63,13 @@ public class GradlassAction extends BaseAction{
 	public String doList() throws Exception {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		this.setParam4DataTable();
+		Member mbo = (Member) BOFactory.build(MemberBO.class, this.getDBAccessUser());
+		MemberVO form = mbo.doFindByPk(this.getDBAccessUser().getOperid());	
 		Map<String, Object> map = new HashMap<String, Object>();
 		GradlassWebParam params = (GradlassWebParam) this.getParam();
+		if(form.getRoleId()!=1){
+			params.set_ne_cpId(String.valueOf(form.getCpId()));
+		}
 		Gradlass bo = (Gradlass) BOFactory.build(GradlassBO.class, this.getDBAccessUser());
 		DataPackage dp = bo.doQuery(params);
 		List<GradlassVO> al=dp.getDatas();
@@ -121,7 +126,7 @@ public class GradlassAction extends BaseAction{
 		return null;
 	}
 	/**
-	 * 编辑
+	 * 缂栬緫
 	 */
 	public String doEdit() throws Exception {
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -252,7 +257,9 @@ public class GradlassAction extends BaseAction{
 				this.getDBAccessUser());
 		DataPackage dp = bo.doQuery(params);
 		GradlassDAO dao = (GradlassDAO) DAOFactory.build(GradlassDAO.class, this.getDBAccessUser());
-		dao.extport(dp);
+		String path=dao.extport(dp);
+		ExtraDAO my=new ExtraDAO();
+		my.doDownLoad(path, response);
 		return null;		
 	}
 }
